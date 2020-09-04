@@ -1,0 +1,73 @@
+.inputWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.input {
+  padding: 10px 15px;
+  outline: none;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.error .input {
+  border-color: #d40707;
+}
+
+.input,
+.input::placeholder {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.error .input,
+.error .input::placeholder {
+  color: #d40707;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.rightIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 5px;
+  transform: translateY(-50%);
+}
+
+.rightIcon > * {
+  color: #ffffff;
+}
+
+.icon > * {
+  width: 15px;
+  height: 15px;
+  color: #ffffff;
+}
+
+.error .icon > * {
+  color: #d40707;
+}
+
+.inputIcon {
+  padding-left: 35px;
+}
+
+.errorBlock {
+  width: 100%;
+  min-height: 15px;
+  color: #d40707;
+  font-size: 12px;
+  margin-top: 5px;
+}

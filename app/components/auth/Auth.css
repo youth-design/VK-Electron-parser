@@ -1,0 +1,29 @@
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerColor {
+  background: rgb(33, 143, 154);
+  background: linear-gradient(
+    90deg,
+    rgba(33, 143, 154, 1) 0%,
+    rgba(108, 108, 179, 1) 48%,
+    rgba(74, 156, 172, 1) 100%
+  );
+}
+
+.icon {
+  font-size: 40px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputWrapper {
+  margin: 15px 0;
+}
