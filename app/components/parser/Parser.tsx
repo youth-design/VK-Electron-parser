@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { connect, ConnectedProps } from 'react-redux';
 import { UsersUserFull } from 'vk-io';
 import styles from './Parser.css';
@@ -33,7 +33,7 @@ function Parser(props: ParserProps): JSX.Element {
   const [isFiltered, setIsFiltered] = useState(false);
   const [filterDisabled, setFilterDisabled] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState<UsersUserFull[]>([]);
-  const { register, handleSubmit } = useForm<ParserForm>({
+  const parserForm = useForm<ParserForm>({
     defaultValues: {
       [parserFields.PUB_ID.name]: '-25240087',
       [parserFields.SEARCH_REQUEST.name]: '#ивент',
@@ -80,39 +80,45 @@ function Parser(props: ParserProps): JSX.Element {
   return (
     <div className={`${authStyles.containerColor} ${styles.container}`}>
       <div>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div>
-            <Input
-              inputRef={register}
-              name={parserFields.PUB_ID.name}
-              placeholder={parserFields.PUB_ID.placeholder}
-            />
-          </div>
-          <div>
-            <Input
-              inputRef={register}
-              name={parserFields.SEARCH_REQUEST.name}
-              placeholder={parserFields.SEARCH_REQUEST.placeholder}
-            />
-          </div>
-          <button type="submit">Поиск</button>
-        </form>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <FormProvider {...parserForm}>
+          <form onSubmit={parserForm.handleSubmit(onSubmitForm)}>
+            <div>
+              <Input
+                inputRef={parserForm.register}
+                name={parserFields.PUB_ID.name}
+                placeholder={parserFields.PUB_ID.placeholder}
+              />
+            </div>
+            <div>
+              <Input
+                inputRef={parserForm.register}
+                name={parserFields.SEARCH_REQUEST.name}
+                placeholder={parserFields.SEARCH_REQUEST.placeholder}
+              />
+            </div>
+            <button type="submit">Поиск</button>
+          </form>
+        </FormProvider>
       </div>
-      <form
-        onSubmit={filterForm.handleSubmit(onFilterFormSubmit)}
-        hidden={!parserState.users.length}
-      >
-        <Input
-          inputRef={filterForm.register}
-          name={filterFields.SEARCH_QUERY.name}
-          placeholder={filterFields.SEARCH_QUERY.placeholder}
-          rightIcon={isFiltered ? <i className="fas fa-times" /> : undefined}
-          onRightIconClick={resetFilter}
-        />
-        <button type="submit" disabled={filterDisabled}>
-          Фильтровать
-        </button>
-      </form>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <FormProvider {...filterForm}>
+        <form
+          onSubmit={filterForm.handleSubmit(onFilterFormSubmit)}
+          hidden={!parserState.users.length}
+        >
+          <Input
+            inputRef={filterForm.register}
+            name={filterFields.SEARCH_QUERY.name}
+            placeholder={filterFields.SEARCH_QUERY.placeholder}
+            rightIcon={isFiltered ? <i className="fas fa-times" /> : undefined}
+            onRightIconClick={resetFilter}
+          />
+          <button type="submit" disabled={filterDisabled}>
+            Фильтровать
+          </button>
+        </form>
+      </FormProvider>
       <div>
         <Pagination users={isFiltered ? filteredUsers : parserState.users} />
       </div>
